@@ -1,6 +1,7 @@
 package it.uniroma3.diadia.giocatore;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.*;
 
 /**
  * La borsa possiede degli attrezzi
@@ -35,8 +36,10 @@ public class Borsa {
 	/* restituise il peso attuale della borsa */
 	public int getPeso() {
 		int peso=0;
-		for(int i=0; i<this.numeroAttrezzi; i++) {
-			peso+=this.attrezzi[i].getPeso();
+		for(Attrezzo a : this .attrezzi) {
+			if(a!=null) {
+				peso+=a.getPeso();
+			}
 		}
 		return peso;
 	}
@@ -62,32 +65,35 @@ public class Borsa {
 	}
 	
 	public Attrezzo getAttrezzo(String nomeAttrezzo) {
-		Attrezzo a=null;
-		for(int i=0; i<this.numeroAttrezzi; i++) {
-			if(this.attrezzi[i].getNome().equals(nomeAttrezzo)) {
-				a=attrezzi[i];
+		for(Attrezzo a : this.attrezzi) {
+			if(a!=null) {
+				if(a.getNome().equals(nomeAttrezzo)) {
+					return a;
+				}
 			}
 		}
-		return a;
+		return null;
 	}
 	
 	/* rimuove un attrezzo dalla borsa e lo restituisce al giocatore */
-	public Attrezzo removeAttrezzo(String nomeAttrezzo) {
+	public Attrezzo removeAttrezzo(String nomeAttrezzo, IOConsole c) {
 		Attrezzo a=null;
 		if(this.hasAttrezzo(nomeAttrezzo)) {
 			a=this.getAttrezzo(nomeAttrezzo);
-			System.out.println("Attrezzo preso dalla borsa");
+			c.mostraMessaggio("Attrezzo preso dalla borsa");
 			
 			//procede a rimuovere l'attrezzo dalla borsa
 			for(int i=0; i<this.attrezzi.length; i++) {
 				if(attrezzi[i]!=null)
 					if(attrezzi[i].getNome().equals(nomeAttrezzo)) {
-						attrezzi[i]=null;
+						attrezzi[i]=null;//quando si rimuovono gli attrezzi e po se ne riaggiungono
+									     //la posizione delle celle degli array cambia e si possono alternare celle con attrezzo a celle null
+										 //per questo poi è bene scorrere tutto l'array per fare le operazioni correttamente
 						this.numeroAttrezzi--;
 					}
 			}
 		} else {
-			System.out.println("Attrezzo non presente in borsa");
+			c.mostraMessaggio("Attrezzo non presente in borsa");
 		}
 		
 		return a;

@@ -1,5 +1,6 @@
 package it.uniroma3.diadia;
 
+import java.util.StringTokenizer;
 import java.util.Scanner;
 /**
  * Si tenga presente che la classe Scanner suddivide lo stream dei caratteri in token 
@@ -24,7 +25,20 @@ public class Comando {
     private String nome;
     private String parametro;
     
-    /* costruttore */
+    /* costruttore nuovo */
+    public Comando(IOConsole console) {
+    	String appoggio=console.leggiRiga();//mette dentro appoggio tutta la riga letta da console
+    	
+    	StringTokenizer tokenizer = new StringTokenizer(appoggio, " ");//separa appoggio in tokens tramite gli spazi
+    	
+    	if(tokenizer.hasMoreTokens())
+    		this.nome=tokenizer.nextToken();
+    	
+    	if(tokenizer.hasMoreTokens())
+    		this.parametro=tokenizer.nextToken();
+    }
+    
+    /* costruttore vecchio */ 
     public Comando(String istruzione) {
 		Scanner scannerDiParole = new Scanner(istruzione);//crea un oggetto di tipo scanner e gli mette dentro istruzione
 
@@ -37,7 +51,7 @@ public class Comando {
 			this.parametro = scannerDiParole.next();//mette il secondo token dentro la variabile parametro
 		
 		scannerDiParole.close();
-    }
+    } 
   
 
     public String getNome() {
