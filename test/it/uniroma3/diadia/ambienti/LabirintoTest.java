@@ -31,6 +31,7 @@ class LabirintoTest {
 	
 	@Test
 	public void testGetStanzaCorrenteQualunqueScorretta() {
+		//assertNot.. andrebbe evitato perché non è molto preciso
 		assertNotEquals("stanzaQualunque", l.getStanzaCorrente().getNome());
 	}
 	

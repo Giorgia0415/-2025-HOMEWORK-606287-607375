@@ -5,36 +5,46 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.comandi.Comando;
+import it.uniroma3.diadia.comandi.ComandoVai;
+
 class GiocatoreTest {
-	private Giocatore g;
+	private Partita p;
+	private Comando c;
 	
 	@BeforeEach
 	public void setUp() {
-		g = new Giocatore();
+		this.p=new Partita();
+		this.c=new ComandoVai();
+		this.c.setParametro("est");
 	}
 	
 	//test metodo getCfu()
 	@Test
 	public void testGetCfuAllInizio() {
-		assertEquals(20, g.getCfu());
+		assertEquals(20, p.getGiocatore().getCfu());
 	}
 	
 	@Test
 	public void testGetCfuDurantePartita() {
-		g.setCfu(13);
-		assertEquals(13, g.getCfu());
+		c.esegui(p);
+		c.esegui(p);
+		assertEquals(18, p.getGiocatore().getCfu());
 	}
 	
 	@Test
 	public void testGetCfuFinePartita() {
-		g.setCfu(0);
-		assertEquals(0, g.getCfu());
+		for(int i=0; i<20; i++) {
+			c.esegui(p);
+		}
+		assertEquals(0, p.getGiocatore().getCfu());
 	}
 	
 	//test metodo getBorsa()
 	@Test
 	public void testGetBorsa() {
-		assertNotNull(g.getBorsa());
+		assertNotNull(p.getGiocatore().getBorsa());
 	}
 
 }

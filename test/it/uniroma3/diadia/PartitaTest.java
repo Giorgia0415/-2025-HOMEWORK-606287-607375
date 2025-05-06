@@ -53,6 +53,25 @@ public class PartitaTest {
 		assertTrue(p.vinta());
 	}
 	
+	//test metodo persa()
+	@Test
+	public void testPersaQuandoNonPersa() {
+		g.setCfu(1);
+		assertFalse(p.persa());
+	}
+	
+	@Test
+	public void testPersaQuandoCfuZero() {
+		g.setCfu(0);
+		assertTrue(p.persa());
+	}
+	
+	@Test
+	public void testPersaQuandoCfuNegativi() {
+		g.setCfu(-2);
+		assertTrue(p.persa());
+	}
+	
 	//test metodo isFinita()
 	@Test
 	public void testIsFinitaAllInizio() {

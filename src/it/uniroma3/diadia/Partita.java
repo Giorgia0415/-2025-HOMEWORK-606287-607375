@@ -50,13 +50,21 @@ public class Partita {
 	public boolean vinta() {
 		return this.labirinto.getStanzaCorrente() == this.labirinto.getStanzaVincente();
 	}
+	
+	/**
+	 * restituisce vero se il giocatore ha esaurito i cfu
+	 * @return vero se la partita è persa
+	 */
+	public boolean persa() {
+		return this.giocatore.getCfu()<=0;
+	}
 
 	/**
 	 * Restituisce vero se e solo se la partita e' finita
 	 * @return vero se partita finita
 	 */
 	public boolean isFinita() {
-		return finita || (this.giocatore.getCfu() == 0) || vinta();
+		return this.finita || (this.giocatore.getCfu() == 0) || this.vinta();
 	}
 
 	/**

@@ -1,7 +1,6 @@
 package it.uniroma3.diadia.giocatore;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-import it.uniroma3.diadia.*;
 
 /**
  * La borsa possiede degli attrezzi
@@ -76,24 +75,21 @@ public class Borsa {
 	}
 	
 	/* rimuove un attrezzo dalla borsa e lo restituisce al giocatore */
-	public Attrezzo removeAttrezzo(String nomeAttrezzo, IOConsole c) {
+	public Attrezzo removeAttrezzo(String nomeAttrezzo) {
 		Attrezzo a=null;
 		if(this.hasAttrezzo(nomeAttrezzo)) {
 			a=this.getAttrezzo(nomeAttrezzo);
-			c.mostraMessaggio("Attrezzo preso dalla borsa");
 			
 			//procede a rimuovere l'attrezzo dalla borsa
 			for(int i=0; i<this.attrezzi.length; i++) {
 				if(attrezzi[i]!=null)
 					if(attrezzi[i].getNome().equals(nomeAttrezzo)) {
-						attrezzi[i]=null;//quando si rimuovono gli attrezzi e po se ne riaggiungono
+						attrezzi[i]=null;//quando si rimuovono gli attrezzi e poi se ne riaggiungono
 									     //la posizione delle celle degli array cambia e si possono alternare celle con attrezzo a celle null
 										 //per questo poi è bene scorrere tutto l'array per fare le operazioni correttamente
 						this.numeroAttrezzi--;
 					}
 			}
-		} else {
-			c.mostraMessaggio("Attrezzo non presente in borsa");
 		}
 		
 		return a;
@@ -108,6 +104,7 @@ public class Borsa {
 	}
 	
 	public String toString() {
+		//una StringBuilder può essere modificata nel corso dell'esecuzione a differenza di una String
 		StringBuilder s = new StringBuilder();
 		if(!this.isEmpty()) {
 			s.append("Contenuto borsa (" + this.getPeso() + " kg/" + this.getPesoMax() + " kg): ");

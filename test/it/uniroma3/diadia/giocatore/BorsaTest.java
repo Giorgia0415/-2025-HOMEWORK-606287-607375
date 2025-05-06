@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.uniroma3.diadia.attrezzi.*;
-import it.uniroma3.diadia.*;
 
 class BorsaTest {
 	private Borsa b;
@@ -80,28 +79,24 @@ class BorsaTest {
 	//test metodo remove attrezzo
 	@Test
 	public void testRemoveAttrezzoNull() {
-		IOConsole c = new IOConsole();
-		assertNull(b.removeAttrezzo(null, c));
+		assertNull(b.removeAttrezzo(null));
 	}
 	
 	@Test
 	public void testRemoveAttrezzoBorsaVuota() {
-		IOConsole c = new IOConsole();
-		assertNull(b.removeAttrezzo("attrezzo", c));
+		assertNull(b.removeAttrezzo("attrezzo"));
 	}
 	
 	@Test
 	public void testRemoveAttrezzoPresente() {
-		IOConsole c = new IOConsole();
 		b.addAttrezzo(a);
-		assertNotNull(b.removeAttrezzo("attrezzo", c));
+		assertNotNull(b.removeAttrezzo("attrezzo"));
 	}
 	
 	@Test
 	public void testRemoveAttrezzoNonPresente() {
-		IOConsole c = new IOConsole();
 		b.addAttrezzo(a);
-		assertNull(b.removeAttrezzo("attrezzo2", c));
+		assertNull(b.removeAttrezzo("attrezzo2"));
 	}
 	
 	//test metodo hasAttrezzo()
