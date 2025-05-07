@@ -46,5 +46,9 @@ public class IOSimulator implements IO {
 	public String[] getArrayDiMessaggi() {
 		return this.arrayDiMessaggi;
 	}
+	
+	public int getIndiceMessaggiMostrati() {
+		return this.indiceMessaggi;
+	}
 
 }

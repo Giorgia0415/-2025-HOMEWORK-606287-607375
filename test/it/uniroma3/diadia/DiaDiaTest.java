@@ -10,19 +10,33 @@ class DiaDiaTest {
 	private String[] comandi;
 
 	@Test
-	void testGiocoVintoSubito() {
+	public void testGiocoVintoSubito() {
 		this.comandi=new String[] {"vai nord"};
 		this.io=new IOSimulator(comandi);
 		this.gioco=new DiaDia(io);
 		this.gioco.gioca();
-		boolean vinto=false;
-		for(String msg:io.getArrayDiMessaggi()) {
-			if(msg.contains("Hai vinto!")) {
-				vinto=true;
-				break;//break è necessario poichè quando la partita finisce il gioco smette di leggere righe
-			}
-		}
-		assertTrue(vinto);
+		
+		assertTrue(io.getArrayDiMessaggi()[io.getIndiceMessaggiMostrati()-1].equals("Hai vinto!"));
+	}
+	
+	@Test
+	public void testFineGiocoImmediata() {
+		this.comandi=new String[] {"fine"};
+		this.io=new IOSimulator(comandi);
+		this.gioco=new DiaDia(io);
+		this.gioco.gioca();
+		
+		assertTrue(io.getArrayDiMessaggi()[io.getIndiceMessaggiMostrati()-1].equals("Grazie di aver giocato!"));
+	}
+	
+	@Test
+	public void testGiocoComandoNonValido() {
+		this.comandi=new String[] {"nonValido", "fine"};
+		this.io=new IOSimulator(comandi);
+		this.gioco=new DiaDia(io);
+		this.gioco.gioca();
+		
+		assertTrue(io.getArrayDiMessaggi()[io.getIndiceMessaggiMostrati()-2].equals("Comando non valido"));
 	}
 
 }
