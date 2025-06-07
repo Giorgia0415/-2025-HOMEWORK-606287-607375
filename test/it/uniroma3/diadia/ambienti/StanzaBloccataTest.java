@@ -10,23 +10,24 @@ import it.uniroma3.diadia.attrezzi.Attrezzo;
 class StanzaBloccataTest {
 	private Attrezzo a, p;
 	private Stanza sBloccata, s;
-	private String dirBloccata, messaggioBloccata;
+	private Direzione dirBloccata;
+	String messaggioBloccata;
 	
 	@BeforeEach
 	public void setUp() {
-		this.sBloccata=new StanzaBloccata("stanzaBloccata", "nord", "passepartout");
-		this.dirBloccata="nord";
+		this.sBloccata=new StanzaBloccata("stanzaBloccata", Direzione.NORD, "passepartout");
+		this.dirBloccata=Direzione.NORD;
 		this.a=new Attrezzo("attrezzo", 2);
 		this.p=new Attrezzo("passepartout", 2);
 		this.s=new Stanza("stanzaBloccata");
-		this.messaggioBloccata=s.getDescrizione()+"\nNon puoi accedere alla stanza in direzione "+this.dirBloccata+" perché non è presente l'oggetto "+this.p.getNome();
+		this.messaggioBloccata=s.getDescrizione()+"\nNon puoi accedere alla stanza in direzione "+this.dirBloccata.name()+" perché non è presente l'oggetto "+this.p.getNome();
 	}
 	
 	//test metodo getStanzaAdiacente()
 	@Test
 	public void testGetStanzaAdiacenteAccessibileNonBloccata() {
-		this.sBloccata.impostaStanzaAdiacente("est", s);
-		assertEquals(s,sBloccata.getStanzaAdiacente("est"));
+		this.sBloccata.impostaStanzaAdiacente(Direzione.EST, s);
+		assertEquals(s,sBloccata.getStanzaAdiacente(Direzione.EST));
 	}
 	
 	@Test

@@ -8,6 +8,15 @@ public class StanzaBuia extends Stanza {
 		this.attrezzoPerVedere=attrezzoPerVedere;
 	}
 	
+	public String getAttrezzoPerVedere() {
+		return this.attrezzoPerVedere;
+	}
+	
+	@Override
+	public boolean isBuia() {
+		return !this.hasAttrezzo(attrezzoPerVedere);
+	}
+	
 	/**
 	 * la stanza mostra la descrizione solo se vi è presente l'oggetto richiesto
 	 */
@@ -19,6 +28,4 @@ public class StanzaBuia extends Stanza {
 			return super.getDescrizione();
 		}
 	}
-	
-
 }

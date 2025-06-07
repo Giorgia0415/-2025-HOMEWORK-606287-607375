@@ -3,31 +3,26 @@ package it.uniroma3.diadia.comandi;
 import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 
-public class ComandoAiuto implements Comando {
-	private IO io;
-	private String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa", "guarda"};
-	private String[] descrizioneComandi = {"Raggiunge la stanza nella direzione specificata",
-										   "Mostra l'elenco dei comandi",
-										   "Termina la partita",
-										   "Prende un attrezzo dalla stanza e lo mette nella borsa",
-										   "Prende un attrezzo dalla borsa e lo lascia nella stanza",
-										   "Mostra lo stato attuale della partita"};
-	
-	@Override
-	public String getNome() {
-		return "aiuto";
-	}
+public class ComandoAiuto extends AbstractComando {
 
-	@Override
-	public String getParametro() {
-		// TODO Auto-generated method stub
-		return null;
+	private static final String[] elencoComandi = {"vai", "aiuto", "fine", "prendi", "posa", "guarda", "guardaBorsa", "interagisci", "saluta", "regala"};
+	private static final String[] descrizioneComandi = {"Raggiunge la stanza nella direzione specificata",
+										   				"Mostra l'elenco dei comandi",
+										   				"Termina la partita",
+										   				"Prende un attrezzo dalla stanza e lo mette nella borsa",
+										   				"Prende un attrezzo dalla borsa e lo lascia nella stanza",
+										   				"Mostra lo stato attuale della partita",
+										   				"Mostra il contenuto della borsa ordinato per: peso(list), nome(set), raggruppato per peso(map)",
+										   				"Interagisce con il personaggio presente nella stanza",
+										   				"Saluta il personaggio presente nella stanza",
+										   				"Rimuove un attrezzo dalla borsa e lo regala al personaggio nella stanza"};
+	
+	public ComandoAiuto() {
+		super("aiuto", null, null);
 	}
 	
-	@Override
-	public void setParametro(String parametro) {
-		// TODO Auto-generated method stub
-
+	public ComandoAiuto(String nome, String parametro, IO io) {
+		super(nome, parametro, io);
 	}
 	
 	/**
@@ -37,17 +32,8 @@ public class ComandoAiuto implements Comando {
 	@Override
 	public void esegui(Partita partita) {
 		for(int i=0; i<elencoComandi.length; i++) {
-			io.mostraMessaggio(elencoComandi[i]+": "+descrizioneComandi[i]);
+			super.getIO().mostraMessaggio(elencoComandi[i]+": "+descrizioneComandi[i]);
 		}
-	}
-	
-	/**
-	 * setta l'istanza per input/output ricevendola da DiaDia
-	 * @param io è l'istanza inizializzata dentro il metodo DiaDia.main()
-	 */
-	@Override
-	public void setIo(IO io) {
-		this.io=io;
 	}
 
 }

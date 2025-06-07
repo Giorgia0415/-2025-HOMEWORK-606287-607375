@@ -1,8 +1,9 @@
 package it.uniroma3.diadia;
 
-import it.uniroma3.diadia.comandi.Comando;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.comandi.AbstractComando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandi;
-import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
+import it.uniroma3.diadia.comandi.FabbricaDiComandiRiflessiva;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -34,8 +35,8 @@ public class DiaDia {
 	
 	/* COSTRUTTORE */
 	
-	public DiaDia(IO io) {
-		this.partita = new Partita();//quando inizia DiaDia viene generata dal costruttore una nuova partita
+	public DiaDia(Labirinto labirinto, IO io) {
+		this.partita = new Partita(labirinto);//quando inizia DiaDia viene generata dal costruttore una nuova partita
 		this.io=io;
 	}
 	
@@ -50,6 +51,11 @@ public class DiaDia {
 		do
 			istruzione=io.leggiRiga();
 		while(!processaIstruzione(istruzione));//finché la partita non è finita continua a leggere istruzioni da tastiera
+	
+		// Alla fine della partita chiudo lo scanner
+	    if(io instanceof IOConsole) {
+	        ((IOConsole)io).chiudi();
+	    }
 	}   
 
 
@@ -59,11 +65,10 @@ public class DiaDia {
 	 * @return lo stato della partita dopo aver processato un'istruzione
 	 */
 	private boolean processaIstruzione(String istruzione) { 
-		Comando comandoDaEseguire;//comandoDaEseguire è polimorfo, assume un comportamento diverso in base all'istruzione
-		FabbricaDiComandi factory = new FabbricaDiComandiFisarmonica();//il tipo dinamico è FabbricaDiComandiFisarmonica così andrà a prendere l'implementazione dentro questa classe
+		AbstractComando comandoDaEseguire;//comandoDaEseguire è polimorfo, assume un comportamento diverso in base all'istruzione
+		FabbricaDiComandi factory = new FabbricaDiComandiRiflessiva();//il tipo dinamico è FabbricaDiComandiRiflessiva così andrà a prendere l'implementazione dentro questa classe
 		
-		comandoDaEseguire=factory.costruisciComando(istruzione);//qui viene restituito il tipo dinamico di comandoDaEseguire
-		comandoDaEseguire.setIo(io);
+		comandoDaEseguire=factory.costruisciComando(istruzione, this.io);//qui viene restituito il tipo dinamico di comandoDaEseguire
 		comandoDaEseguire.esegui(this.partita);//in base al comando ricevuto prima da factory si sceglie da quale classe andare a prende l'implementazione da usare
 		
 		/* situazioni che si possono verificare al di fuori dei comandi */
@@ -80,7 +85,8 @@ public class DiaDia {
 
 	public static void main(String[] argc) {
 		IO io = new IOConsole();
-		DiaDia gioco = new DiaDia(io);
+		Labirinto labirinto=new Labirinto.LabirintoBuilder().getLabirinto();
+		DiaDia gioco = new DiaDia(labirinto, io);//essendo main un metodo statico per accedere a membri non statici bisogna prima creare un'istanza della classe
 		gioco.gioca();
 	}
 }

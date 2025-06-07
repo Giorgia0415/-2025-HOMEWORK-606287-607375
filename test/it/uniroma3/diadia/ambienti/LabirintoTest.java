@@ -10,16 +10,31 @@ class LabirintoTest {
 	
 	@BeforeEach
 	public void setUp() {
-		l = new Labirinto();
-		l.creaLabirinto();
+		Stanza iniziale=new Stanza("iniziale");
+		Stanza vincente=new Stanza("vincente");
+		l = Labirinto.newBuilder()
+				.addStanzaIniziale(iniziale)
+				.addStanzaVincente(vincente)
+				.getLabirinto();
+	}
+	
+	//test metodo getStanzaIniziale()
+	@Test
+	public void testGetStanzaInizialeCorretta() {
+		assertEquals("iniziale", l.getStanzaIniziale().getNome());
+	}
+	
+	@Test
+	public void testGetStanzaInizialeScorretta() {
+		assertFalse(l.getStanzaIniziale().getNome().equals("stanzaSbagliata"));
 	}
 	
 	//test metodo getStanzaCorrente()
 	@Test
 	public void testGetStanzaCorrenteIniziale() {
-		Stanza s = new Stanza("Atrio");
+		Stanza s = new Stanza("iniziale");
 		l.setStanzaCorrente(s);
-		assertEquals("Atrio", l.getStanzaCorrente().getNome());
+		assertEquals("iniziale", l.getStanzaCorrente().getNome());
 	}
 	
 	@Test
@@ -37,8 +52,13 @@ class LabirintoTest {
 	
 	//test metodo getStanzaVincente()
 	@Test
-	public void testGetStanzaVincente() {
-		assertEquals("Biblioteca", l.getStanzaVincente().getNome());
+	public void testGetStanzaVincenteCorretta() {
+		assertEquals("vincente", l.getStanzaVincente().getNome());
+	}
+	
+	@Test
+	public void testGetStanzaVincenteScorretta() {
+		assertFalse(l.getStanzaVincente().getNome().equals("nonVincente"));
 	}
 
 }

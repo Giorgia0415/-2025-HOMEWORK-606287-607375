@@ -4,27 +4,14 @@ import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
-public class ComandoPosa implements Comando {
-	private IO io;
-	String nomeAttrezzo;
+public class ComandoPosa extends AbstractComando {
 	
-	@Override
-	public String getNome() {
-		return "posa";
-	}
-
-	@Override
-	public String getParametro() {
-		return this.nomeAttrezzo;
+	public ComandoPosa() {
+		super("posa", null, null);
 	}
 	
-	/**
-	 * imposta il parametro del comando
-	 * ovvero il nome dell'attrezzo che si vuole posare
-	 */
-	@Override
-	public void setParametro(String parametro) {
-		this.nomeAttrezzo=parametro;
+	public ComandoPosa(String nome, String parametro, IO io) {
+		super(nome, parametro, io);
 	}
 	
 	/**
@@ -34,32 +21,23 @@ public class ComandoPosa implements Comando {
 	@Override
 	public void esegui(Partita partita) {
 		
-		if(nomeAttrezzo==null) {
-			io.mostraMessaggio("Che attrezzo vuoi posare?");
+		if(super.getParametro()==null) {
+			super.getIO().mostraMessaggio("Che attrezzo vuoi posare?");
 			return;
 		}
 		
-		Attrezzo attrezzoCercato=partita.getGiocatore().getBorsa().getAttrezzo(nomeAttrezzo);
+		Attrezzo attrezzoCercato=partita.getGiocatore().getBorsa().getAttrezzo(super.getParametro());
 		if(attrezzoCercato!=null) {
-			partita.getGiocatore().getBorsa().removeAttrezzo(nomeAttrezzo);//rimuove l'attrezzo trovato dalla borsa...
+			partita.getGiocatore().getBorsa().removeAttrezzo(super.getParametro());//rimuove l'attrezzo trovato dalla borsa...
 			partita.getLabirinto().getStanzaCorrente().addAttrezzo(attrezzoCercato);//...e lo mette nella stanza
 			
-			io.mostraMessaggio(attrezzoCercato.getNome()+" preso dalla borsa e posato in "+partita.getLabirinto().getStanzaCorrente().getNome());
+			super.getIO().mostraMessaggio(attrezzoCercato.getNome()+" preso dalla borsa e posato in "+partita.getLabirinto().getStanzaCorrente().getNome());
 			
 			return;
 		}
 		
-		io.mostraMessaggio("Attrezzo non presente in borsa");
+		super.getIO().mostraMessaggio("Attrezzo non presente in borsa");
 
-	}
-	
-	/**
-	 * setta l'istanza per input/output ricevendola da DiaDia
-	 * @param io è l'istanza inizializzata dentro il metodo DiaDia.main()
-	 */
-	@Override
-	public void setIo(IO io) {
-		this.io=io;
 	}
 
 }

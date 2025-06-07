@@ -17,8 +17,14 @@ public class PartitaTest {
 	//test-case
 	@BeforeEach
 	public void setUp() {
-		this.p = new Partita();
-		this.l = p.getLabirinto();
+		Stanza stanzaIn=new Stanza("iniziale");
+		Stanza stanzaVin=new Stanza("vincente");
+		this.l=Labirinto.newBuilder()
+				.addStanzaIniziale(stanzaIn)
+				.addStanzaVincente(stanzaVin)
+				.addAdiacenza(stanzaIn, stanzaVin, Direzione.NORD)
+				.getLabirinto();
+		this.p = new Partita(l);
 		this.g = p.getGiocatore();
 	}
 	

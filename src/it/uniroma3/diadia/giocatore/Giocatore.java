@@ -1,5 +1,7 @@
 package it.uniroma3.diadia.giocatore;
 
+import it.uniroma3.diadia.Config;
+
 /**
  * Un giocatore possiede una borsa in cui sono contenuti gli attrezzi
  * e dei cfu che vengono gestiti dal giocatore.
@@ -9,14 +11,12 @@ package it.uniroma3.diadia.giocatore;
 
 public class Giocatore {
 	
-	static final private int CFU_INIZIALI = 20;
-	
 	private int cfu;
 	private Borsa borsa;
 	
 	/* costruttore */
 	public Giocatore() {
-		this.cfu=CFU_INIZIALI;
+		this.cfu=Config.getCfuIniziali();
 		this.borsa = new Borsa(); //il giocatore inizia la partita con una borsa
 	}
 	

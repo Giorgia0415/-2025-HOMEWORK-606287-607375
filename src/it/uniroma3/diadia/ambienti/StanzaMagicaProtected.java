@@ -29,17 +29,7 @@ public class StanzaMagicaProtected extends StanzaProtected {
 			attrezzo=this.modificaAttrezzo(attrezzo);
 		}
 		
-		if(attrezzo!=null) {
-			//accede alle variabili della classe base che sono protected
-			if(this.numeroAttrezzi<this.attrezzi.length) {
-				this.attrezzi[this.numeroAttrezzi]=attrezzo;
-				this.numeroAttrezzi++;
-				return true;
-			}
-		}
-		
-		return false;
-		//return super.addAttrezzo(attrezzo);//per aggiungere l'attrezzo richiama il metodo della classe base, in quanto pur possedento le sue stesse variabili non vi può accede in qaunto private
+		return super.addAttrezzo(attrezzo);
 	}
 	
 	/* METODI AGGIUNTIVI */

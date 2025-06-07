@@ -7,18 +7,23 @@ import org.junit.jupiter.api.Test;
 
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 class ComandoPrendiTest {
 	private Partita p;
-	private Comando c;
+	private AbstractComando c;
 	private Attrezzo a;
+	private Labirinto labirinto;
 
 	@BeforeEach
 	public void setUp() {
-		this.p=new Partita();
-		this.c=new ComandoPrendi();
-		c.setIo(new IOConsole());
+		labirinto=Labirinto.newBuilder()
+				.addStanzaIniziale(new Stanza("iniz"))
+				.getLabirinto();
+		this.p=new Partita(labirinto);
+		this.c=new ComandoPrendi("prendi", null, new IOConsole());
 		this.a=new Attrezzo("attrezzo", 2);
 	}
 	

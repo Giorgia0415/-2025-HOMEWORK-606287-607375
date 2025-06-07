@@ -1,22 +1,35 @@
 package it.uniroma3.diadia.ambienti;
 
 public class StanzaBloccata extends Stanza {
-	private String direzioneBloccata;
+	private Direzione direzioneBloccata;
 	private String attrezzoPerSbloccare;
 
-	public StanzaBloccata(String nome, String direzioneBloccata, String attrezzoPerSbloccare) {
+	public StanzaBloccata(String nome, Direzione direzioneBloccata, String attrezzoPerSbloccare) {
 		super(nome);
 		this.direzioneBloccata=direzioneBloccata;
 		this.attrezzoPerSbloccare=attrezzoPerSbloccare;
 	}
 	
+	public Direzione getDirezioneBloccata() {
+		return this.direzioneBloccata;
+	}
+	
+	public String getAttrezzoPerSbloccare() {
+		return this.attrezzoPerSbloccare;
+	}
+	
 	@Override
-	public Stanza getStanzaAdiacente(String direzione) {
+	public Stanza getStanzaAdiacente(Direzione direzione) {
 		if(direzione==this.direzioneBloccata && !this.hasAttrezzo(attrezzoPerSbloccare)) {
 			return this;
 		} else {
 			return super.getStanzaAdiacente(direzione);
 		}
+	}
+	
+	@Override
+	public boolean isBloccata() {
+		return !this.hasAttrezzo(attrezzoPerSbloccare);
 	}
 	
 	@Override

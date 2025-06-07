@@ -36,15 +36,15 @@ public class StanzaTest {
 	
 	@Test
 	public void testGetStanzaAdiacente_StanzaInesistente() {
-		s.impostaStanzaAdiacente("nord", null);
-		assertNull(s.getStanzaAdiacente("nord"));
+		s.impostaStanzaAdiacente(Direzione.NORD, null);
+		assertNull(s.getStanzaAdiacente(Direzione.NORD));
 	}
 	
 	@Test
 	public void testGetStanzaAdiacente_StanzaEsistente() {
 		Stanza stanza = new Stanza("stanza");
-		s.impostaStanzaAdiacente("nord", stanza);
-		assertNotNull(s.getStanzaAdiacente("nord"));
+		s.impostaStanzaAdiacente(Direzione.NORD, stanza);
+		assertNotNull(s.getStanzaAdiacente(Direzione.NORD));
 	}
 	
 	//test metodo getAttrezzi()
@@ -65,6 +65,19 @@ public class StanzaTest {
 			s.addAttrezzo(a);
 		}
 		assertFalse(s.addAttrezzo(a));
+	}
+	
+	@Test
+	public void testAddAttrezzoGiaPresente() {
+		s.addAttrezzo(a);
+		assertFalse(s.addAttrezzo(a));
+	}
+	
+	@Test
+	public void testAddAttrezzoNomeUgualeOggettiDiverso() {
+		s.addAttrezzo(a);
+		Attrezzo a2=new Attrezzo("attrezzo", 1);
+		assertFalse(s.addAttrezzo(a2));
 	}
 	
 	@Test
@@ -122,11 +135,5 @@ public class StanzaTest {
 	public void testRemoveAttrezzoPresente() {
 		s.addAttrezzo(a);
 		assertTrue(s.removeAttrezzo("attrezzo"));
-	}
-	
-	//test metodo getDirezioni()
-	@Test
-	public void testGetDirezioni() {
-		assertNotNull(s.getDirezioni());
 	}
 }

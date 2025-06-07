@@ -1,10 +1,15 @@
 package it.uniroma3.diadia;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class IOSimulator implements IO {
-	private String[] arrayDiLetture;
+	private List<String> comandiDaLeggere;
 	private int indiceLetture;
-	private String[] arrayDiMessaggi;
-	private int indiceMessaggi;
+	private Map<String, List<String>> messaggiPerComando;
+	private String comandoCorrente;
 	
 	/**
 	 * il costruttore riceve le righe lette dall'esterno e le inizializza
@@ -12,11 +17,10 @@ public class IOSimulator implements IO {
 	 * @param arrayDiLetture memorizza le righe da leggere dall'input
 	 * @param arrayDiMessaggi memorizza le righe da stampare in output
 	 */
-	public IOSimulator(String[] arrayDiLetture) {
-		this.arrayDiLetture=arrayDiLetture;
-		this.arrayDiMessaggi=new String[1000];
+	public IOSimulator(List<String> listaDiLetture) {
+		this.comandiDaLeggere=new ArrayList<>(listaDiLetture);
 		this.indiceLetture=0;
-		this.indiceMessaggi=0;
+		this.messaggiPerComando=new HashMap<>();
 	}
 	
 	/**
@@ -24,10 +28,9 @@ public class IOSimulator implements IO {
 	 */
 	@Override
 	public void mostraMessaggio(String msg) {
-		if(this.indiceMessaggi<this.arrayDiMessaggi.length) {
-			this.arrayDiMessaggi[this.indiceMessaggi]=msg;
-			this.indiceMessaggi++;
-		}
+		if(this.comandoCorrente!=null)
+			//aggiunge alla lista dei messaggi stamapati dopo un comando quello nuovo
+			this.messaggiPerComando.get(comandoCorrente).add(msg);
 	}
 	
 	/**
@@ -35,20 +38,18 @@ public class IOSimulator implements IO {
 	 */
 	@Override
 	public String leggiRiga() {
-		String riga=null;
-		if(this.indiceLetture<this.arrayDiLetture.length) {
-			riga=this.arrayDiLetture[this.indiceLetture];
-			this.indiceLetture++;
-		}
-		return riga;
+		if(this.indiceLetture<this.comandiDaLeggere.size()) {
+			//legge l'ultimo comando inserito e non ancora letto
+			this.comandoCorrente=this.comandiDaLeggere.get(indiceLetture++);
+			//crea un nuova lista di messaggi per un nuovo comando
+			this.messaggiPerComando.putIfAbsent(comandoCorrente, new ArrayList<>());
+			return this.comandoCorrente;
+		} else
+			return null;
 	}
 	
-	public String[] getArrayDiMessaggi() {
-		return this.arrayDiMessaggi;
-	}
-	
-	public int getIndiceMessaggiMostrati() {
-		return this.indiceMessaggi;
+	public Map<String, List<String>> getMessaggi() {
+		return this.messaggiPerComando;
 	}
 
 }

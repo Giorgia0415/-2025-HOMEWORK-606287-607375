@@ -20,11 +20,10 @@ public class Partita {
 	private Labirinto labirinto;
 	private Giocatore giocatore;
 	
-	public Partita(){
+	public Partita(Labirinto labirinto){
 		this.finita = false;
 		this.giocatore = new Giocatore();
-		this.labirinto = new Labirinto();
-		this.labirinto.creaLabirinto();//quando viene avviata una nuova partita si crea subito il labirinto
+		this.labirinto = labirinto;
 	}
 	
 	public Labirinto getLabirinto() {
@@ -64,7 +63,7 @@ public class Partita {
 	 * @return vero se partita finita
 	 */
 	public boolean isFinita() {
-		return this.finita || (this.giocatore.getCfu() == 0) || this.vinta();
+		return this.finita || this.persa() || this.vinta();
 	}
 
 	/**

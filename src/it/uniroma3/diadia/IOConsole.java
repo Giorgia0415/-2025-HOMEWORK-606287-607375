@@ -4,6 +4,12 @@ import java.util.Scanner;
 
 public class IOConsole implements IO {
 	
+	private Scanner scannerDiLinee;
+	
+	public IOConsole() {
+        this.scannerDiLinee = new Scanner(System.in);
+    }
+	
 	/* riceve come parametro il messaggio da mostrare a schermo e lo porta in output */
 	@Override
 	public void mostraMessaggio(String msg) {
@@ -13,10 +19,16 @@ public class IOConsole implements IO {
 	/* acquisisce la riga successiva dalla tastiera */
 	@Override
 	public String leggiRiga() {
-		Scanner scannerDiLinee = new Scanner(System.in);
-		String riga = scannerDiLinee.nextLine();
-		
-		return riga;
+		return this.scannerDiLinee.nextLine();
 	}
+	
+	/**
+     * Metodo per chiudere lo scanner (da chiamare al termine del programma)
+     */
+    public void chiudi() {
+        if (scannerDiLinee != null) {
+            scannerDiLinee.close();
+        }
+    }
 
 }

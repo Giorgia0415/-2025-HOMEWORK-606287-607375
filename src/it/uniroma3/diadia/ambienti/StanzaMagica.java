@@ -29,8 +29,12 @@ public class StanzaMagica extends Stanza {
 			attrezzo=this.modificaAttrezzo(attrezzo);
 		}
 		
-		return super.addAttrezzo(attrezzo);
-		//return super.addAttrezzo(attrezzo);//per aggiungere l'attrezzo richiama il metodo della classe base, in quanto pur possedento le sue stesse variabili non vi può accede in qaunto private
+		return super.addAttrezzo(attrezzo);//per aggiungere l'attrezzo richiama il metodo della classe base, in quanto pur possedento le sue stesse variabili non vi può accede in quanto private
+	}
+	
+	@Override
+	public boolean isMagica() {
+		return true;
 	}
 	
 	/* METODI AGGIUNTIVI */

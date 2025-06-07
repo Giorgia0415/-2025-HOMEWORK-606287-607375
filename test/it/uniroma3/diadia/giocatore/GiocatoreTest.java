@@ -5,19 +5,31 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
-import it.uniroma3.diadia.comandi.Comando;
+import it.uniroma3.diadia.ambienti.Direzione;
+import it.uniroma3.diadia.ambienti.Labirinto;
+import it.uniroma3.diadia.ambienti.Stanza;
+import it.uniroma3.diadia.comandi.AbstractComando;
 import it.uniroma3.diadia.comandi.ComandoVai;
 
 class GiocatoreTest {
 	private Partita p;
-	private Comando c;
+	private AbstractComando c;
+	private Labirinto labirinto;
 	
 	@BeforeEach
 	public void setUp() {
-		this.p=new Partita();
-		this.c=new ComandoVai();
-		this.c.setParametro("est");
+		Stanza s1=new Stanza("s1");
+		Stanza s2=new Stanza("s2");
+		labirinto=Labirinto.newBuilder()
+				.addStanzaIniziale(s1)
+				.addStanza(s2)
+				.addAdiacenza(s1, s2, Direzione.EST)
+				.addAdiacenza(s2, s1, Direzione.EST)
+				.getLabirinto();
+		this.p=new Partita(labirinto);
+		this.c=new ComandoVai("vai", "est", new IOConsole());
 	}
 	
 	//test metodo getCfu()

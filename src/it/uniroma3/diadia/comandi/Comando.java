@@ -34,6 +34,6 @@ public interface Comando {
 	 * setta l'istanza per input/output ricevendola da DiaDia
 	 * @param io è l'istanza inizializzata dentro il metodo DiaDia.main()
 	 */
-	public void setIo(IO io);
+	public void setIO(IO io);
 
 }
